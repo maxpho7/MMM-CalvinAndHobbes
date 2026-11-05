@@ -88,18 +88,9 @@ Module.register("MMM-CalvinAndHobbes", {
             let comicImage = document.getElementById("cahcomiccontent");
             if (comicImage) {
                 console.log("Comic image found! Adding event listener.");
-                comicImage.addEventListener("click", function (event) {
-                    event.stopPropagation(); // Prevent bubbling issues
-                    console.log("Comic clicked!");
-                    if (!this.classList.contains("expanded")) {
-                       this.classList.toggle("expanded");
-                       document.body.appendChild(this);
-                       document.body.classList.add("expanded-mode");
-                    } else {
-                          this.classList.remove("expanded");
-                          document.getElementById("cahcomicwrapper").appendChild(this);
-                          document.body.classList.remove("expanded-mode");
-                    }
+                  this.classList.remove("expanded");
+                  document.getElementById("cahcomicwrapper").appendChild(this);
+                  document.body.classList.remove("expanded-mode");
                 });
 
                 // Close image when clicking outside
