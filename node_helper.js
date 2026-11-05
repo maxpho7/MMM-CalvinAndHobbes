@@ -35,25 +35,25 @@ module.exports = NodeHelper.create({
     },
 
     getComicLink: function (html) {
-        return new Promise( function (resolve, reject) {
-            console.log("Trying to get comic link from DOM");
+    return new Promise(function (resolve, reject) {
+        console.log("Trying to get comic link from meta tags");
+        try {
             const $ = cheerio.load(html);
-            $('div[class^="ShowFiveFavorites"]').remove();
-            try {
-                $('div[class^="Comic_comic"] button img').each(function (i, elem) {
-                  console.log("Found IMG SRC:", $(elem).attr('src'));
-                });
-                const comicUrl = $('div[class^="Comic_comic"] button img').attr('src');
-                    console.log('Comic URL: ' + comicUrl);
-                    if (comicUrl != null) {
-                        resolve(comicUrl);
-                    } else {
-                        throw Error("Could not find the right Element");
-                    }
-            } catch (e) {
-                reject(e);
+
+            // GoComics stellt das direkte Bild immer im Open Graph Meta-Tag bereit
+            const comicUrl = $('meta[property="og:image"]').attr('content');
+
+            console.log('Comic URL found: ' + comicUrl);
+
+            if (comicUrl != null && comicUrl.trim() !== "") {
+                resolve(comicUrl);
+            } else {
+                throw Error("Could not find the og:image metadata element");
             }
-        });
+        } catch (e) {
+            reject(e);
+        }
+    });
     },
 
     sendComicNotification: function (comicLink) {
