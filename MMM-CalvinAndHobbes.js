@@ -3,7 +3,7 @@ Module.register("MMM-CalvinAndHobbes", {
     defaults: {
         grayScale: false,
         invertColors: false,
-        updateInterval: 1000 * 60 * 60 * 12, // 12 Hr
+        updateInterval: 1000 * 60 * 60 * 3, // 3 Hr
         limitComicHeight: 300,
         scrollInterval : 15000,
         scrollRatio : 1, // scroll by 80% of visible height,
@@ -86,25 +86,7 @@ Module.register("MMM-CalvinAndHobbes", {
         // Ensure event listener is attached every time DOM updates
         setTimeout(() => {
             let comicImage = document.getElementById("cahcomiccontent");
-            if (comicImage) {
-                console.log("Comic image found! Adding event listener.");
-                  this.classList.remove("expanded");
-                  document.getElementById("cahcomicwrapper").appendChild(this);
-                  document.body.classList.remove("expanded-mode");
-                });
 
-                // Close image when clicking outside
-                document.body.addEventListener("click", function (event) {
-                    if (!comicImage.contains(event.target)) {
-                        console.log("Click outside detected. Closing expanded comic.");
-                        comicImage.classList.remove("expanded");
-                        document.getElementById("cahcomicwrapper").appendChild(comicImage);
-                        document.body.classList.remove("expanded-mode"); 
-                   }
-                }, true);
-            } else {
-                console.warn("Comic image not found in DOM.");
-            }
         }, 1000); // Small delay to allow MM to update DOM
         return wrapper;
     },
